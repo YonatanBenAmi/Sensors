@@ -9,8 +9,10 @@ namespace Sensors.Game
             int sensorsForExposure = 2;
             IranianAgent iranianAgent = new IranianAgent(sensorsForExposure);
             GameMethod gameMethod = new GameMethod();
-
+            string color = "\u001b[36m";
             int found = 0;
+
+            Console.WriteLine($"{color}<<<<<The Sensor Game>>>>>\u001b[0m");
 
             while (found < sensorsForExposure)
             {
@@ -36,7 +38,7 @@ namespace Sensors.Game
 
                 Sensor sensor = new Sensor(userChoice);
                 int singleFound = gameMethod.ActivateSingle(sensor, iranianAgent.GetExposureSensors());
-                
+
                 if (singleFound > 0)
                     Console.WriteLine($"\u001b[32mWell done! You found the right sensor.\u001b[0m");
                 else
