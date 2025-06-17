@@ -6,8 +6,7 @@ namespace Sensors
     {
         static void Main(string[] args)
         {
-            Gameing gameing = new Gameing();
-            gameing.StartGame();
+            Gameing.Instance.StartGame();
         }
     }
 }
