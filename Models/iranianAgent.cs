@@ -1,30 +1,34 @@
+using Sensors.ENUM;
+
 namespace Sensors.Models
 {
     public class IranianAgent
     {
         string Rank;
-        int SumSensorsForExposure;
-        private Dictionary<string, int> ExposureSensors { get; }
+        public int SensorsForExposure { get; }
+        private Dictionary<SensorType, int> ExposureSensors { get; }
+        public List<Sensor> AttachedSensors { get; private set; }
 
-        public IranianAgent(int sumSensorsForExposure, string rank = "Junior")
+        public IranianAgent(string rank = "Junior")
         {
             Rank = rank;
-            SumSensorsForExposure = sumSensorsForExposure;
+            SensorsForExposure = 2;
             ExposureSensors = CreateRandomExposureSensors();
+            AttachedSensors = new List<Sensor>();
         }
 
-        public Dictionary<string, int> CreateRandomExposureSensors()
+        Dictionary<SensorType, int> CreateRandomExposureSensors()
         {
             Random random = new Random();
-            Dictionary<string, int> myExposureSensors = new Dictionary<string, int>
+            Dictionary<SensorType, int> myExposureSensors = new Dictionary<SensorType, int>
             {
-                { "Thermal", 0 },
-                { "Motion", 0 },
-                { "Cellular", 0 }
+                { SensorType.Thermal, 0 },
+                { SensorType.Motion, 0 },
+                { SensorType.Cellular, 0 }
             };
 
-            string[] types = { "Thermal", "Motion", "Cellular" };
-            while (myExposureSensors.Values.Sum() < SumSensorsForExposure)
+            SensorType[] types = { SensorType.Thermal, SensorType.Motion, SensorType.Cellular };
+            while (myExposureSensors.Values.Sum() < SensorsForExposure)
             {
                 int randTypes = random.Next(0, types.Length);
                 myExposureSensors[types[randTypes]] += 1;
@@ -32,9 +36,22 @@ namespace Sensors.Models
             return myExposureSensors;
         }
 
-        public Dictionary<string, int> GetExposureSensors()
+        public Dictionary<SensorType, int> GetExposureSensors()
         {
             return ExposureSensors;
         }
+
+        public int AttachAndActivateSensor(Sensor sensor)
+        {
+            AttachedSensors.Add(sensor);
+
+            if (ExposureSensors.ContainsKey(sensor.Type) && ExposureSensors[sensor.Type] > 0)
+            {
+                ExposureSensors[sensor.Type]--;
+                return 1;
+            }
+            return 0;
+        }
+
     }
 }
