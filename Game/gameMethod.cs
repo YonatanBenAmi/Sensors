@@ -1,3 +1,5 @@
+using Sensors.Models;
+
 namespace Sensors.Game
 {
     public class GameMethod
@@ -11,10 +13,12 @@ namespace Sensors.Game
             Console.WriteLine("1) Thermal");
             Console.WriteLine("2) Motion");
             Console.WriteLine("3) Cellular");
-
-            string userChoice = Console.ReadLine()!;
-            Console.WriteLine(userChoice);
-
         }
+
+        public int ActivateSingle(Sensor sensor, Dictionary<string, int> exposureSensors)
+        {
+            return sensor.Activate(exposureSensors) ? 1 : 0;
+        }
+
     }
 }
