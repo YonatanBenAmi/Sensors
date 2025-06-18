@@ -1,5 +1,6 @@
 using Sensors.Models;
 using Sensors.ENUM;
+using Sensors.Factory;
 
 namespace Sensors.Game
 {
@@ -20,7 +21,8 @@ namespace Sensors.Game
         private Gameing() {}
         public void StartGame()
         {
-            IranianAgent iranianAgent = new IranianAgent();
+            
+            IranianAgent iranianAgent =AgentFactory.CreateAgent();
             GameMethod gameMethod = new GameMethod();
             string color = "\u001b[36m";
             int found = 0;
@@ -38,7 +40,7 @@ namespace Sensors.Game
                 }
 
                 SensorType sensorType = gameMethod.AvailableSensors[userChoice];
-                Sensor sensor = new Sensor(sensorType);
+                Sensor sensor = SensorFactory.CreateSensor(sensorType);
 
                 int singleFound = iranianAgent.AttachAndActivateSensor(sensor);
 
@@ -49,9 +51,7 @@ namespace Sensors.Game
 
                 found += singleFound;
                 Console.WriteLine($"\u001b[36mTotal: {found}/{iranianAgent.SensorsForExposure}\u001b[0m");
-
             }
-
             Console.WriteLine("\u001b[32mYou won!\u001b[0m");
         }
     }
