@@ -1,4 +1,5 @@
 using Sensors.ENUM;
+using Sensors.Factory;
 
 namespace Sensors.Models
 {
@@ -13,28 +14,16 @@ namespace Sensors.Models
         {
             Rank = rank;
             SensorsForExposure = 2;
-            ExposureSensors = CreateRandomExposureSensors();
+            ExposureSensors = AgentFactory.CreateRandomExposureSensors(SensorsForExposure);
             AttachedSensors = new List<Sensor>();
         }
 
-        Dictionary<SensorType, int> CreateRandomExposureSensors()
+        public int GetSensorsForExposure()
         {
-            Random random = new Random();
-            Dictionary<SensorType, int> myExposureSensors = new Dictionary<SensorType, int>
-            {
-                { SensorType.Thermal, 0 },
-                { SensorType.Motion, 0 },
-                { SensorType.Cellular, 0 }
-            };
-
-            SensorType[] types = { SensorType.Thermal, SensorType.Motion, SensorType.Cellular };
-            while (myExposureSensors.Values.Sum() < SensorsForExposure)
-            {
-                int randTypes = random.Next(0, types.Length);
-                myExposureSensors[types[randTypes]] += 1;
-            }
-            return myExposureSensors;
+            return SensorsForExposure;
         }
+
+       
 
         public Dictionary<SensorType, int> GetExposureSensors()
         {
