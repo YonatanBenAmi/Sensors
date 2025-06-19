@@ -18,6 +18,7 @@ namespace Sensors.Game
             {
                 Console.WriteLine($"{sensor.Key}) {sensor.Value}");
             }
+            Console.Write("\u001b[33mYour choice: ");
         }
 
     }
